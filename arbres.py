@@ -1,16 +1,16 @@
 from graphviz import Digraph
 
-# Création de l'arbre avec Graphviz
-def creer_arbre():
+# Create the tree using Graphviz
+def create_tree():
     dot = Digraph()
 
-    # Ajout des noeuds
-    dot.node('N0', '-')  # Racine
-    dot.node('N1', '/')  # Sous-arbre gauche
-    dot.node('N2', '+')  # Sous-arbre droit
+    # Adding nodes
+    dot.node('N0', '-')  # Root
+    dot.node('N1', '/')  # Left subtree
+    dot.node('N2', '+')  # Right subtree
 
-    dot.node('N3', '*')  # Sous-arbre gauche du '/'
-    dot.node('N4', '+')  # Sous-arbre droit du '/'
+    dot.node('N3', '*')  # Left subtree of '/'
+    dot.node('N4', '+')  # Right subtree of '/'
 
     dot.node('N5', '+')
     dot.node('N6', '3')
@@ -21,7 +21,7 @@ def creer_arbre():
     dot.node('N9', '-')
     dot.node('N10', '2')
 
-    dot.node('N11', '9')  # Sous-arbre gauche du '+'
+    dot.node('N11', '9')  # Left subtree of '+'
     dot.node('N12', '5')
 
     dot.node('N13', '*')
@@ -33,73 +33,74 @@ def creer_arbre():
     dot.node('N17', '7')
     dot.node('N18', '4')
 
-    # Création des arêtes (liens entre les noeuds)
-    dot.edge('N0', 'N1')  # Lien entre '-' et '/'
-    dot.edge('N0', 'N2')  # Lien entre '-' et '+'
+    # Creating edges (links between nodes)
+    dot.edge('N0', 'N1')  # Link between '-' and '/'
+    dot.edge('N0', 'N2')  # Link between '-' and '+'
 
-    dot.edge('N1', 'N3')  # Lien entre '/' et '*'
-    dot.edge('N1', 'N4')  # Lien entre '/' et '+'
+    dot.edge('N1', 'N3')  # Link between '/' and '*'
+    dot.edge('N1', 'N4')  # Link between '/' and '+'
 
-    dot.edge('N3', 'N5')  # Lien entre '*' et '3'
-    dot.edge('N3', 'N6')  # Lien entre '*' et '1'
+    dot.edge('N3', 'N5')  # Link between '*' and '3'
+    dot.edge('N3', 'N6')  # Link between '*' and '1'
 
-    dot.edge('N5', 'N7')  # Lien entre '*' et '3'
-    dot.edge('N5', 'N8')  # Lien entre '*' et '1'
+    dot.edge('N5', 'N7')  # Link between '*' and '3'
+    dot.edge('N5', 'N8')  # Link between '*' and '1'
 
-    dot.edge('N4', 'N9')  # Lien entre '+' et '5'
-    dot.edge('N4', 'N10') # Lien entre '+' et '2'
+    dot.edge('N4', 'N9')  # Link between '+' and '5'
+    dot.edge('N4', 'N10') # Link between '+' and '2'
 
-    dot.edge('N9', 'N11')  # Lien entre '+' et '5'
-    dot.edge('N9', 'N12') # Lien entre '+' et '2'
+    dot.edge('N9', 'N11')  # Link between '+' and '5'
+    dot.edge('N9', 'N12') # Link between '+' and '2'
 
-    dot.edge('N2', 'N13')  # Lien entre '+' et '*'
-    dot.edge('N2', 'N14')  # Lien entre '+' et '6'
+    dot.edge('N2', 'N13')  # Link between '+' and '*'
+    dot.edge('N2', 'N14')  # Link between '+' and '6'
 
-    dot.edge('N13', 'N15')  # Lien entre '*' et '3'
-    dot.edge('N13', 'N16')  # Lien entre '*' et '-'
+    dot.edge('N13', 'N15')  # Link between '*' and '3'
+    dot.edge('N13', 'N16')  # Link between '*' and '-'
 
-    dot.edge('N16', 'N17')  # Lien entre '7' et '4'
-    dot.edge('N16', 'N18')  # Lien entre '7' et '4'
+    dot.edge('N16', 'N17')  # Link between '7' and '4'
+    dot.edge('N16', 'N18')  # Link between '7' and '4'
 
-    # Sauvegarder et afficher l'arbre
-    dot.render('arbre', format='pdf', cleanup=True)
-    print("Arbre généré avec succès.")
+    # Save and display the tree
+    dot.render('tree', format='pdf', cleanup=True)
+    print("Tree successfully generated.")
 
-    return dot  # Retourne le graphe pour d'autres utilisations
+    return dot  # Returns the graph for further use
 
+# Tree traversal functions
 def inorder_traversal(node):
-    """Effectue un parcours Inorder."""
+    """Performs an inorder traversal."""
     return inorder_traversal(node.left) + [node.value] + inorder_traversal(node.right) if node else []
 
 def preorder_traversal(node):
-    """Effectue un parcours Preorder."""
+    """Performs a preorder traversal."""
     return [node.value] + preorder_traversal(node.left) + preorder_traversal(node.right) if node else []
 
 def postorder_traversal(node):
-    """Effectue un parcours Postorder."""
+    """Performs a postorder traversal."""
     return postorder_traversal(node.left) + postorder_traversal(node.right) + [node.value] if node else []
 
-# Représentation de l'arbre en mémoire
+# Memory representation of the tree
 class NodeMemory:
     def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
 
-def construire_arbre():
-    """Construit l'arbre en mémoire."""
+def construct_tree():
+    """Builds the tree in memory."""
     root = NodeMemory('-')
     root.left = NodeMemory('/')
     root.right = NodeMemory('+')
 
     root.left.left = NodeMemory('*')
-    root.left.right = NodeMemory('+' )
+    root.left.right = NodeMemory('+')
 
     root.left.left.left = NodeMemory('+')
     root.left.left.right = NodeMemory('3')
 
-    root.left.left.left.left= NodeMemory("3")
-    root.left.left.left.right= NodeMemory("1")
+    root.left.left.left.left = NodeMemory("3")
+    root.left.left.left.right = NodeMemory("1")
 
     root.left.right.left = NodeMemory('-')
     root.left.right.right = NodeMemory('2')
@@ -118,20 +119,20 @@ def construire_arbre():
     return root
 
 if __name__ == "__main__":
-    # Création de l'arbre et génération du graphe
-    dot = creer_arbre()
+    # Create and generate the graph
+    dot = create_tree()
     
-    # Construction de l'arbre en mémoire
-    arbre_en_memoire = construire_arbre()
+    # Build the tree in memory
+    tree_in_memory = construct_tree()
 
-    # Traversées
-    inorder = inorder_traversal(arbre_en_memoire)
-    preorder = preorder_traversal(arbre_en_memoire)
-    postorder = postorder_traversal(arbre_en_memoire)
+    # Tree traversals
+    inorder = inorder_traversal(tree_in_memory)
+    preorder = preorder_traversal(tree_in_memory)
+    postorder = postorder_traversal(tree_in_memory)
 
-    print("Inorder:", inorder)
-    print("Preorder:", preorder)
-    print("Postorder:", postorder)
+    print("Inorder Traversal:", inorder)
+    print("Preorder Traversal:", preorder)
+    print("Postorder Traversal:", postorder)
 
-   
-    dot.view()  # Affiche le graphique
+    # Display the graph
+    dot.view()
